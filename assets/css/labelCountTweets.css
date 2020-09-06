@@ -1,0 +1,18 @@
+#demoFont {
+  font-family: "titulo", sans-serif;
+  font-size: 17px;
+  letter-spacing: -1.6px;
+  word-spacing: 0.4px;
+  color: rgba(200, 4, 56, 0.774);
+  font-weight: 700;
+  text-decoration: none;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+  position: relative;
+}
+
+.panelAlerta {
+  margin-right: 20px;
+  margin-left: 20px;
+}

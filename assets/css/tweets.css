@@ -1,0 +1,102 @@
+.panel {
+  background: #fff;
+  padding: 20px;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  margin: 5px 0;
+  width: 100%;
+  align-items: center;
+  width: 1500px;
+  margin-left: 10px;
+}
+.bloques {
+  padding: 20px;
+  padding-left: 50px;
+  margin: 20px;
+  display: flex;
+  width: 100%;
+}
+
+.bloqueContadorTweets {
+  font-family: Impact, Charcoal, sans-serif;
+  font-size: 18px;
+  padding: 20px;
+  padding-left: 30px;
+  margin: 30px;
+  display: flex;
+  width: 80%;
+}
+
+.card {
+  width: 30%;
+  margin: 10px;
+  padding: 5px;
+  float: left;
+  -webkit-box-shadow: px 6px 5px 0px rgba(77, 77, 77, 1);
+  -moz-box-shadow: 6px 6px 5px 0px rgba(77, 77, 77, 1);
+  box-shadow: 6px 6px 5px 0px rgba(77, 77, 77, 1);
+}
+
+.card-title {
+  font-family: Impact, Charcoal, sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.4px;
+  word-spacing: -1px;
+
+  font-weight: 400;
+  text-decoration: none;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: uppercase;
+}
+.recovered {
+  color: #00c210;
+  border-bottom: 5px solid rgba(0, 255, 0, 0.5);
+}
+
+.death {
+  color: #ff0000;
+  border-bottom: 5px solid rgba(255, 0, 0, 0.5);
+}
+.confirmed {
+  color: #1d00c2;
+  border-bottom: 5px solid rgba(0, 0, 255, 0.5);
+}
+.card-text {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 14px;
+  letter-spacing: -0.8px;
+  word-spacing: -1px;
+  color: #727070bb;
+  font-weight: 400;
+  text-decoration: none;
+  font-style: italic;
+  font-variant: normal;
+  text-transform: uppercase;
+}
+.card-subtitle {
+  font-size: 18px;
+}
+
+.main {
+  margin-left: 7%;
+}
+
+.icon {
+  width: 30px;
+  float: left;
+  display: block;
+  margin: 6px 0% 0% 1%;
+}
+
+.cardContador {
+  width: 40%;
+  margin: 10px;
+  padding: 25px;
+  float: left;
+  font-size: 15px;
+  -webkit-box-shadow: px 6px 5px 0px rgba(77, 77, 77, 1);
+  -moz-box-shadow: 6px 6px 5px 0px rgba(77, 77, 77, 1);
+  box-shadow: 6px 6px 5px 0px rgba(77, 77, 77, 1);
+}

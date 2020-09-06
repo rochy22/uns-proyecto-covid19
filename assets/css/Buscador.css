@@ -1,0 +1,42 @@
+#btn_agregar{
+    padding: 3px 10px;
+    border-radius: 0px 15px 15px 0px;
+    background-color: #333;
+}
+
+#btn_agregar:hover{
+    background-color: #6f6;
+    color: #333;
+}
+.filtros{
+    list-style: none;
+}
+
+.filtro_contenedor{
+    position: relative;
+    border: 1px solid #ddd;
+}
+
+.filtro_lado{
+    backface-visibility: hidden;  
+    border-radius: 5px; 
+    text-align: center;
+    color: #ddd;
+}
+
+.filtro_lado_frente{
+    background-color: #333;
+}
+
+.filtro_lado_atras{
+    display: none;  
+    background-color: #e55; 
+}
+
+.filtro_contenedor:hover .filtro_lado_frente{
+    display: none;
+}
+
+.filtro_contenedor:hover .filtro_lado_atras{
+    display: block;
+}

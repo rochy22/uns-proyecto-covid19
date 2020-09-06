@@ -1,0 +1,82 @@
+.panelTweets {
+  background-color: rgb(243, 243, 243);
+  border: 1px solid rgba(172, 172, 172, 0.808);
+  border-radius: 5px 5px 5px 5px;
+  padding-top: 10px;
+  margin-top: 10px;
+  margin-left: 5%;
+  width: 90%;
+}
+.bloque-tweet {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  border: 1px solid rgba(172, 172, 172, 0.808);
+  border-radius: 5px 5px 5px 5px;
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+img {
+  width: 60px;
+  border-radius: 3px 3px 3px 3px;
+  float: left;
+  display: block;
+  margin: 0px 2% 0% 0%;
+}
+.nombre {
+  margin-bottom: 0px;
+  font-size: 15px;
+  float: left;
+  display: block;
+  font-weight: bold;
+}
+.usuario {
+  font-style: italic;
+}
+#barraCantidad{    
+    margin-bottom: 15px;
+}
+
+#cuerpo {
+  margin: auto;
+  width: 80%;
+  margin-top: 10px;
+}
+
+#map_info {
+  display: flex;
+  flex-direction: row;
+}
+
+#World {
+  width: 69%;
+  background-color: rgba(199, 21, 69, 0.808);
+}
+
+#secundario {
+  padding: 20px;
+  width: 30%;
+  border: 1px solid #eee;
+  border-radius: 1px 5px 5px 0px;
+  background-color: #333;
+  color: #eee;
+}
+
+@media (max-width: 768px) {
+  #map_info {
+    display: flex;
+    flex-direction: column;
+  }
+  #World {
+    width: 100%;
+    background-color: rgba(199, 21, 69, 0.808);
+  }
+
+  #secundario {
+    width: 100%;
+    border-radius: 0px 0px 5px 5px;
+    background-color: #333;
+  }
+}

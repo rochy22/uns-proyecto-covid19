@@ -1,0 +1,48 @@
+{
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/preset-react": "^7.9.4",
+    "@symfony/webpack-encore": "^0.28.2",
+    "core-js": "^3.0.0",
+    "less-loader": "4.1.0",
+    "regenerator-runtime": "^0.13.2",
+    "webpack-notifier": "^1.6.0"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production --progress"
+  },
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@mapbox/mapbox-gl-draw": "^1.1.2",
+    "@turf/line-distance": "^4.7.3",
+    "axios": "^0.19.2",
+    "bluebird": "^3.7.2",
+    "bootstrap": "^4.5.2",
+    "dotenv": "^8.2.0",
+    "fs": "0.0.1-security",
+    "highcharts": "^8.0.4",
+    "highcharts-react-official": "^3.0.0",
+    "mapbox-gl": "^1.10.0",
+    "mime": "^2.4.4",
+    "net": "^1.0.2",
+    "numeral": "^2.0.6",
+    "ol": "^6.3.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-countup": "^4.3.3",
+    "react-dom": "^16.13.1",
+    "react-mapbox-gl": "^4.8.3",
+    "react-mapbox-gl-draw": "^2.0.4",
+    "react-router-dom": "^5.1.2",
+    "request": "^2.88.2",
+    "sentiment": "^5.0.2",
+    "tls": "0.0.1",
+    "twit": "^2.2.11",
+    "unirest": "^0.6.0"
+  }
+}
