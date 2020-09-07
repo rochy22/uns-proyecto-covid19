@@ -7,7 +7,6 @@ const Tweets = ({ tweets }) => {
     let comentarios;
     if (ts != null) {
       comentarios = JSON.parse(ts);
-      console.log(comentarios.statuses);
       return comentarios.statuses;
     } else {
       return [];

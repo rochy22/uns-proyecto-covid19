@@ -78,13 +78,11 @@ class Tweets extends Component {
           mesGuardado = parseInt(resultado.data.day.split("-")[1]);
           añoGuardado = parseInt(resultado.data.day.split("-")[0]);
         }
-        console.log("Llegue hasta este punto");
 
         if (
           (diaGuardado < diaActualidad && mesGuardado == mesActualidad) ||
           mesGuardado < mesActualidad
         ) {
-          console.log("Llegue hasta este punto");
           let token = [diaGuardado, mesGuardado, añoGuardado];
           var arregloRetornado = updateDay(token[0], token[1], token[2]);
           token[0] = arregloRetornado[0];

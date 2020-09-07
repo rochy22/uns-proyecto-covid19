@@ -49,20 +49,17 @@ class World extends Component {
       .catch((error) => {});
   }
 
-  componentDidUpdate() {
+  /* componentDidUpdate() {
     if (
       this.state.radius !== 0 &&
       this.state.tweets == null &&
       !this.state.drawing
     ) {
-      //console.log("Actualizo");
       this.setState({ drawing: !this.state.drawing });
-
-      // this.getTweets();
-
+      this.getTweets();
       this.setState({ drawing: !this.state.drawing });
     }
-  }
+  }*/
 
   onClickMap(maps, evt) {
     if (!this.state.drawing) {
@@ -121,7 +118,6 @@ class World extends Component {
   };
 
   setCantidad_tweets = (cantidad) => {
-    console.log("llegue aca.");
     this.setState({
       ...this.state,
       cantidad,

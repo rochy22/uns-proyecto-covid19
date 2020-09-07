@@ -16,7 +16,6 @@ export function analisisTexto(tweets) {
       good = good + 1;
     }
   });
-  //console.log("sad:" + sad + "--neutral:" + neutral + "--good:" + good);
   return [sad, neutral, good];
 }
 
@@ -26,7 +25,6 @@ export function contadorHashtags(tweets, totalActual) {
   tweets.map((data2) => {
     if (data2.entities.hashtags.length > 0) {
       data2.entities.hashtags.map((textHashtag) => {
-        //console.log(textHashtag.text);
         messageMap.set(
           textHashtag.text,
           messageMap.has(textHashtag.text)

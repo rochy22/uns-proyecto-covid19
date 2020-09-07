@@ -18,7 +18,6 @@ class RequestTweets extends Component {
   getRestantes() {
     axios.get(`/api/count`).then((response) => {
       this.setState({ request: Object.values(response.data.search)[0] });
-      console.log(this.state.request);
     });
   }
 

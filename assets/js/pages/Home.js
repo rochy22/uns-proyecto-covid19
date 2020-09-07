@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 // Css
 import logo from "../../../src/Media/home1.png";
 import banner2 from "../../../src/Media/home2.png";

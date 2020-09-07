@@ -141,11 +141,9 @@ class IndexController extends AbstractController
 
         $entityManager = $this->getDoctrine()->getManager();
 
-        // Retornatodos los tweets que tengan el dia especificado
         $ExisteHashtag = $entityManager->getRepository(Hashtag::class)->findOneBy(array('name' => $texto));
         if ($cantidad != null) {
             if ($ExisteHashtag === null) {
-                //el Hashtag no existe asi que lo agrego
                 $hashtag = new Hashtag($texto, $cantidad);
                 $entityManager->persist($hashtag);
                 $entityManager->flush($hashtag);
@@ -282,9 +280,6 @@ class IndexController extends AbstractController
         $response->setContent(json_encode($twitter2));
         return $response;
     }
-
-
-
 
     /**
      * @Route("/api/count", name="count")

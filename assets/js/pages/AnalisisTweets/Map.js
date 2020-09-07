@@ -94,9 +94,6 @@ class Map extends React.Component {
             var type = value;
             var row = i;
 
-            console.log(
-              "{name:" + name + ",code:" + postalCode + ",value:" + value + "}"
-            );
             this.options.series[0].data.push({
               name: name,
               code: postalCode,
