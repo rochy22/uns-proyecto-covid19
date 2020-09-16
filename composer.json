@@ -1,6 +1,4 @@
 {
-  "name": "c/c",
-  "description": "Proyecto finalde materia",
   "type": "project",
   "license": "proprietary",
   "require": {
