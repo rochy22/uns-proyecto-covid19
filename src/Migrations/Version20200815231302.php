@@ -22,8 +22,8 @@ final class Version20200815231302 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('DROP SEQUENCE tweets_per_day_id_seq CASCADE');
-        $this->addSql('DROP TABLE tweets_per_day');
+        //$this->addSql('DROP SEQUENCE tweets_per_day_id_seq CASCADE');
+       // $this->addSql('DROP TABLE tweets_per_day');
     }
 
     public function down(Schema $schema) : void
@@ -31,8 +31,8 @@ final class Version20200815231302 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE SCHEMA public');
-        $this->addSql('CREATE SEQUENCE tweets_per_day_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE TABLE tweets_per_day (id INT NOT NULL, sad INT NOT NULL, neutral INT NOT NULL, good INT NOT NULL, date TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
+      //  $this->addSql('CREATE SCHEMA public');
+       // $this->addSql('CREATE SEQUENCE tweets_per_day_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+       // $this->addSql('CREATE TABLE tweets_per_day (id INT NOT NULL, sad INT NOT NULL, neutral INT NOT NULL, good INT NOT NULL, date TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
     }
 }

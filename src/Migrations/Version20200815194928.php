@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200817201004 extends AbstractMigration
+final class Version20200815194928 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,11 +22,8 @@ final class Version20200817201004 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        $this->addSql('CREATE SCHEMA public');
-        //  $this->addSql('DROP SEQUENCE hashtag_id_seq CASCADE');
-         $this->addSql('CREATE SEQUENCE hashtags_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-         $this->addSql('CREATE TABLE hashtags (id INT NOT NULL, name TYPE VARCHAR(20),  cantidad INT NOT NULL, PRIMARY KEY(id))');
-        
+       // $this->addSql('CREATE SEQUENCE tweets_per_day_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        //$this->addSql('CREATE TABLE tweets_per_day (id INT NOT NULL, sad INT NOT NULL, neutral INT NOT NULL, good INT NOT NULL, date TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
     }
 
     public function down(Schema $schema) : void
@@ -34,7 +31,8 @@ final class Version20200817201004 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
-        //  $this->addSql('ALTER TABLE hashtag DROP cantidad');
-       // $this->addSql('ALTER TABLE hashtag ALTER name TYPE VARCHAR(20)');
+      //  $this->addSql('CREATE SCHEMA public');
+       // $this->addSql('DROP SEQUENCE tweets_per_day_id_seq CASCADE');
+       // $this->addSql('DROP TABLE tweets_per_day');
     }
 }
