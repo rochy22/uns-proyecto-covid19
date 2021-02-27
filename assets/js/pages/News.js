@@ -8,7 +8,7 @@ class News extends Component {
     super();
     this.state = {
       news: [],
-      paises: ["Argentina", "Estados Unidos", "Brasil"],
+      paises: ["Argentina", "Estados Unidos", "España"],
       loading: true,
     };
   }

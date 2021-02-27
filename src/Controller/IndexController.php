@@ -10,8 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 
 class IndexController extends AbstractController
@@ -179,9 +177,9 @@ class IndexController extends AbstractController
         $requestMethod = 'GET';
         $twitter = new TwitterAPIExchange($settings);
         $oldArray = array(
-            array('Infobae', 'clarin', 'lanacion', 'cronica'),
+            array('Infobae', 'clarincom', 'lanacion', 'cronica'),
             array('cnnbrk', 'nytimes', 'cnn', 'bbcbreaking'),
-            array('JornalOGlobo', 'jornaldobrasil', 'folha', 'atarde')
+            array('el_pais', 'lavozdegalicia', 'rtve', 'A3Noticias')
         );
         foreach ($oldArray as $element) {
             $twitter2 = [];
