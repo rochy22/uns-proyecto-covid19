@@ -167,10 +167,10 @@ class IndexController extends AbstractController
     public function getNoticias()
     {
         $settings = array(
-            'oauth_access_token' => "2966972505-Exog4KXEbjdEC5fnp6VGqEhsslnpWQCJWWIGt8U",
-            'oauth_access_token_secret' => "nxKHor3JCLa3AdwLEvPWdJ8zKI0ve0gqKIghLlNxYaaJy",
-            'consumer_key' => "qS8PbVBidxtTl2ZKfUogWgYfi",
-            'consumer_secret' => "9ifggO1pGvVhcgHUAPOIdHMNAIV5D3c3bdqC4EG8gjstLbA7EE"
+            'oauth_access_token' => $_ENV["OAUTH_ACCESS_TOKEN"],
+            'oauth_access_token_secret' => $_ENV["OAUTH_ACCESS_TOKEN_SECRET"],
+            'consumer_key' => $_ENV["CONSUMER_KEY"],
+            'consumer_secret' => $_ENV["CONSUMER_SECRET"],
         );
 
         $url = 'https://api.twitter.com/1.1/search/tweets.json';
@@ -207,10 +207,10 @@ class IndexController extends AbstractController
     {
         $day = $request->query->get('day');
         $settings = array(
-            'oauth_access_token' => "2966972505-Exog4KXEbjdEC5fnp6VGqEhsslnpWQCJWWIGt8U",
-            'oauth_access_token_secret' => "nxKHor3JCLa3AdwLEvPWdJ8zKI0ve0gqKIghLlNxYaaJy",
-            'consumer_key' => "qS8PbVBidxtTl2ZKfUogWgYfi",
-            'consumer_secret' => "9ifggO1pGvVhcgHUAPOIdHMNAIV5D3c3bdqC4EG8gjstLbA7EE"
+            'oauth_access_token' => $_ENV["OAUTH_ACCESS_TOKEN"],
+            'oauth_access_token_secret' => $_ENV["OAUTH_ACCESS_TOKEN_SECRET"],
+            'consumer_key' => $_ENV["CONSUMER_KEY"],
+            'consumer_secret' => $_ENV["CONSUMER_SECRET"],
         );
 
         $url = 'https://api.twitter.com/1.1/search/tweets.json';
@@ -250,10 +250,10 @@ class IndexController extends AbstractController
         $filtros = $request->query->get('filtros');
         $listaFiltros = explode(",", $filtros,);
         $settings = array(
-            'oauth_access_token' => "2966972505-Exog4KXEbjdEC5fnp6VGqEhsslnpWQCJWWIGt8U",
-            'oauth_access_token_secret' => "nxKHor3JCLa3AdwLEvPWdJ8zKI0ve0gqKIghLlNxYaaJy",
-            'consumer_key' => "qS8PbVBidxtTl2ZKfUogWgYfi",
-            'consumer_secret' => "9ifggO1pGvVhcgHUAPOIdHMNAIV5D3c3bdqC4EG8gjstLbA7EE"
+            'oauth_access_token' => $_ENV["OAUTH_ACCESS_TOKEN"],
+            'oauth_access_token_secret' => $_ENV["OAUTH_ACCESS_TOKEN_SECRET"],
+            'consumer_key' => $_ENV["CONSUMER_KEY"],
+            'consumer_secret' => $_ENV["CONSUMER_SECRET"],
         );
 
         $url = 'https://api.twitter.com/1.1/search/tweets.json';
@@ -287,10 +287,10 @@ class IndexController extends AbstractController
     public function getRequestRestantes()
     {
         $settings = array(
-            'oauth_access_token' => "2966972505-Exog4KXEbjdEC5fnp6VGqEhsslnpWQCJWWIGt8U",
-            'oauth_access_token_secret' => "nxKHor3JCLa3AdwLEvPWdJ8zKI0ve0gqKIghLlNxYaaJy",
-            'consumer_key' => "qS8PbVBidxtTl2ZKfUogWgYfi",
-            'consumer_secret' => "9ifggO1pGvVhcgHUAPOIdHMNAIV5D3c3bdqC4EG8gjstLbA7EE"
+            'oauth_access_token' => $_ENV["OAUTH_ACCESS_TOKEN"],
+            'oauth_access_token_secret' => $_ENV["OAUTH_ACCESS_TOKEN_SECRET"],
+            'consumer_key' => $_ENV["CONSUMER_KEY"],
+            'consumer_secret' => $_ENV["CONSUMER_SECRET"],
         );
 
         $url = 'https://api.twitter.com/1.1/application/rate_limit_status.json';

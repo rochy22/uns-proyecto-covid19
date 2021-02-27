@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import ReactMapboxGl from "react-mapbox-gl";
 import DrawControl from "react-mapbox-gl-draw";
 import { RadiusMode } from "./Maps.js";
-import style from "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 
 var Map = ReactMapboxGl({
   accessToken:
@@ -10,8 +9,7 @@ var Map = ReactMapboxGl({
 });
 
 const World = ({ initialLat, initialLng, onClickMap, setDrawingFalse }) => {
-  const onDrawCreate = (feature) => {
-  };
+  const onDrawCreate = (feature) => {};
 
   const onDrawDelete = (feature) => {
     Map = ReactMapboxGl({
