@@ -2,14 +2,14 @@ import test from 'tape';
 import spy from 'sinon/lib/sinon/spy'; // avoid babel-register-related error by importing only spy
 import Feature from '../src/feature_types/feature';
 import Point from '../src/feature_types/point';
-import MapboxDraw from '../';
+import MapboxDraw from '../index';
 import createFeature from './utils/create_feature';
 import getPublicMemberKeys from './utils/get_public_member_keys';
 import createMockCtx from './utils/create_mock_feature_context';
 import drawGeometry from './utils/draw_geometry';
 import createMap from './utils/create_map';
 
-test('Point constructor and API', t => {
+test('Point constructor and API', (t) => {
   const rawPoint = createFeature('point');
   const ctx = createMockCtx();
   const point = new Point(ctx, rawPoint);
@@ -33,7 +33,7 @@ test('Point constructor and API', t => {
   t.end();
 });
 
-test('Point#isValid', t => {
+test('Point#isValid', (t) => {
   const validRawPoint = createFeature('point');
   const validPoint = new Point(createMockCtx(), validRawPoint);
   t.equal(validPoint.isValid(), true, 'returns true for valid point');
@@ -51,7 +51,7 @@ test('Point#isValid', t => {
   t.end();
 });
 
-test('Point#updateCoordinate, Point#getCoordinate', t => {
+test('Point#updateCoordinate, Point#getCoordinate', (t) => {
   const rawPoint = createFeature('point');
   rawPoint.geometry.coordinates = [1, 2];
   const point = new Point(createMockCtx(), rawPoint);
@@ -69,7 +69,7 @@ test('Point#updateCoordinate, Point#getCoordinate', t => {
   t.end();
 });
 
-test('Point integration test', t => {
+test('Point integration test', (t) => {
   const pointCoordinates = [10, 10];
   const map = createMap();
   const Draw = new MapboxDraw();

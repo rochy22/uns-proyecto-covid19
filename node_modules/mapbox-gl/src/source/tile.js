@@ -9,6 +9,7 @@ import SymbolBucket from '../data/bucket/symbol_bucket';
 import {CollisionBoxArray} from '../data/array_types';
 import Texture from '../render/texture';
 import browser from '../util/browser';
+import toEvaluationFeature from '../data/evaluation_feature';
 import EvaluationParameters from '../style/evaluation_parameters';
 import SourceFeatureState from '../source/source_state';
 import {lazyLoadRTLTextPlugin} from './rtl_text_plugin';
@@ -307,12 +308,16 @@ class Tile {
 
         for (let i = 0; i < layer.length; i++) {
             const feature = layer.feature(i);
-            if (filter.filter(new EvaluationParameters(this.tileID.overscaledZ), feature)) {
-                const id = featureIndex.getId(feature, sourceLayer);
-                const geojsonFeature = new GeoJSONFeature(feature, z, x, y, id);
-                (geojsonFeature: any).tile = coord;
-                result.push(geojsonFeature);
+            if (filter.needGeometry) {
+                const evaluationFeature = toEvaluationFeature(feature, true);
+                if (!filter.filter(new EvaluationParameters(this.tileID.overscaledZ), evaluationFeature, this.tileID.canonical)) continue;
+            } else if (!filter.filter(new EvaluationParameters(this.tileID.overscaledZ), feature)) {
+                continue;
             }
+            const id = featureIndex.getId(feature, sourceLayer);
+            const geojsonFeature = new GeoJSONFeature(feature, z, x, y, id);
+            (geojsonFeature: any).tile = coord;
+            result.push(geojsonFeature);
         }
     }
 
@@ -405,7 +410,7 @@ class Tile {
 
             bucket.update(sourceLayerStates, sourceLayer, this.imageAtlas && this.imageAtlas.patternPositions || {});
             const layer = painter && painter.style && painter.style.getLayer(id);
-            if (layer && layer.paint) {
+            if (layer) {
                 this.queryPadding = Math.max(this.queryPadding, layer.queryRadius(bucket));
             }
         }

@@ -138,7 +138,7 @@ declare module "../highcharts" {
     /**
      * Contains all loaded map data for Highmaps.
      */
-    let maps: Dictionary<any>;
+    let maps: Record<string, any>;
     /**
      * Highmaps only. Restructure a GeoJSON object in preparation to be read
      * directly by the series.mapData option. The GeoJSON will be broken down to
@@ -158,7 +158,7 @@ declare module "../highcharts" {
      *
      * @return An object ready for the `mapData` option.
      */
-    function geojson(geojson: any, hType?: string): Array<any>;
+    function geojson(geojson: GeoJSON, hType?: string): Array<any>;
     /**
      * The factory function for creating new map charts. Creates a new Chart
      * object with different default options than the basic Chart.
@@ -205,7 +205,7 @@ declare module "../highcharts" {
     /**
      * Utility for reading SVG paths directly.
      */
-    function splitPath(path: string): SVGPathArray;
+    function splitPath(path: (string|Array<(string|number)>)): SVGPathArray;
 }
 export default factory;
 export let Highcharts: typeof _Highcharts;

@@ -49,10 +49,10 @@ export interface Handler {
 
     // Handlers can optionally implement these methods.
     // They are called with dom events whenever those dom evens are received.
-    +touchstart?: (e: TouchEvent, points: Array<Point>) => HandlerResult | void;
-    +touchmove?: (e: TouchEvent, points: Array<Point>) => HandlerResult | void;
-    +touchend?: (e: TouchEvent, points: Array<Point>) => HandlerResult | void;
-    +touchcancel?: (e: TouchEvent, points: Array<Point>) => HandlerResult | void;
+    +touchstart?: (e: TouchEvent, points: Array<Point>, mapTouches: Array<Touch>) => HandlerResult | void;
+    +touchmove?: (e: TouchEvent, points: Array<Point>, mapTouches: Array<Touch>) => HandlerResult | void;
+    +touchend?: (e: TouchEvent, points: Array<Point>, mapTouches: Array<Touch>) => HandlerResult | void;
+    +touchcancel?: (e: TouchEvent, points: Array<Point>, mapTouches: Array<Touch>) => HandlerResult | void;
     +mousedown?: (e: MouseEvent, point: Point) => HandlerResult | void;
     +mousemove?: (e: MouseEvent, point: Point) => HandlerResult | void;
     +mouseup?: (e: MouseEvent, point: Point) => HandlerResult | void;
@@ -104,7 +104,6 @@ class HandlerManager {
     _updatingCamera: boolean;
     _changes: Array<[HandlerResult, Object, any]>;
     _previousActiveHandlers: { [string]: Handler };
-    _bearingChanged: boolean;
     _listeners: Array<[HTMLElement, string, void | {passive?: boolean, capture?: boolean}]>;
 
     constructor(map: Map, options: { interactive: boolean, pitchWithRotate: boolean, clickTolerance: number, bearingSnap: number}) {
@@ -128,12 +127,14 @@ class HandlerManager {
         const el = this._el;
 
         this._listeners = [
-            // Bind touchstart and touchmove with passive: false because, even though
-            // they only fire a map events and therefore could theoretically be
-            // passive, binding with passive: true causes iOS not to respect
-            // e.preventDefault() in _other_ handlers, even if they are non-passive
-            // (see https://bugs.webkit.org/show_bug.cgi?id=184251)
-            [el, 'touchstart', {passive: false}],
+            // This needs to be `passive: true` so that a double tap fires two
+            // pairs of touchstart/end events in iOS Safari 13. If this is set to
+            // `passive: false` then the second pair of events is only fired if
+            // preventDefault() is called on the first touchstart. Calling preventDefault()
+            // undesirably prevents click events.
+            [el, 'touchstart', {passive: true}],
+            // This needs to be `passive: false` so that scrolls and pinches can be
+            // prevented in browsers that don't support `touch-actions: none`, for example iOS Safari 12.
             [el, 'touchmove', {passive: false}],
             [el, 'touchend', undefined],
             [el, 'touchcancel', undefined],
@@ -233,7 +234,7 @@ class HandlerManager {
         this._handlersById[handlerName] = handler;
     }
 
-    stop() {
+    stop(allowEndAnimation: boolean) {
         // do nothing if this method was triggered by a gesture update
         if (this._updatingCamera) return;
 
@@ -241,7 +242,7 @@ class HandlerManager {
             handler.reset();
         }
         this._inertia.clear();
-        this._fireEvents({}, {});
+        this._fireEvents({}, {}, allowEndAnimation);
         this._changes = [];
     }
 
@@ -259,6 +260,10 @@ class HandlerManager {
         return !!this._eventsInProgress.rotate;
     }
 
+    isMoving() {
+        return Boolean(isMoving(this._eventsInProgress)) || this.isZooming();
+    }
+
     _blockedByActive(activeHandlers: { [string]: Handler }, allowed: Array<string>, myName: string) {
         for (const name in activeHandlers) {
             if (name === myName) continue;
@@ -273,10 +278,21 @@ class HandlerManager {
         this.handleEvent(e, `${e.type}Window`);
     }
 
+    _getMapTouches(touches: TouchList) {
+        const mapTouches = [];
+        for (const t of touches) {
+            const target = ((t.target: any): Node);
+            if (this._el.contains(target)) {
+                mapTouches.push(t);
+            }
+        }
+        return ((mapTouches: any): TouchList);
+    }
+
     handleEvent(e: InputEvent | RenderFrameEvent, eventName?: string) {
 
         if (e.type === 'blur') {
-            this.stop();
+            this.stop(true);
             return;
         }
 
@@ -294,9 +310,8 @@ class HandlerManager {
         const eventsInProgress = {};
         const activeHandlers = {};
 
-        const points = e ? (e.targetTouches ?
-            DOM.touchPos(this._el, ((e: any): TouchEvent).targetTouches) :
-            DOM.mousePos(this._el, ((e: any): MouseEvent))) : null;
+        const mapTouches = e.touches ? this._getMapTouches(((e: any): TouchEvent).touches) : undefined;
+        const points = mapTouches ? DOM.touchPos(this._el, mapTouches) : DOM.mousePos(this._el, ((e: any): MouseEvent));
 
         for (const {handlerName, handler, allowed} of this._handlers) {
             if (!handler.isEnabled()) continue;
@@ -307,7 +322,7 @@ class HandlerManager {
 
             } else {
                 if ((handler: any)[eventName || e.type]) {
-                    data = (handler: any)[eventName || e.type](e, points);
+                    data = (handler: any)[eventName || e.type](e, points, mapTouches);
                     this.mergeHandlerResult(mergedHandlerResult, eventsInProgress, data, handlerName, inputEvent);
                     if (data && data.needsRenderFrame) {
                         this._triggerRenderFrame();
@@ -342,7 +357,7 @@ class HandlerManager {
         const {cameraAnimation} = mergedHandlerResult;
         if (cameraAnimation) {
             this._inertia.clear();
-            this._fireEvents({}, {});
+            this._fireEvents({}, {}, true);
             this._changes = [];
             cameraAnimation(this._map);
         }
@@ -400,7 +415,7 @@ class HandlerManager {
         const tr = map.transform;
 
         if (!hasChange(combinedResult)) {
-            return this._fireEvents(combinedEventsInProgress, deactivatedHandlers);
+            return this._fireEvents(combinedEventsInProgress, deactivatedHandlers, true);
         }
 
         let {panDelta, zoomDelta, bearingDelta, pitchDelta, around, pinchAround} = combinedResult;
@@ -421,29 +436,33 @@ class HandlerManager {
 
         this._map._update();
         if (!combinedResult.noInertia) this._inertia.record(combinedResult);
-        this._fireEvents(combinedEventsInProgress, deactivatedHandlers);
+        this._fireEvents(combinedEventsInProgress, deactivatedHandlers, true);
 
     }
 
-    _fireEvents(newEventsInProgress: { [string]: Object }, deactivatedHandlers: Object) {
+    _fireEvents(newEventsInProgress: { [string]: Object }, deactivatedHandlers: Object, allowEndAnimation: boolean) {
 
         const wasMoving = isMoving(this._eventsInProgress);
         const nowMoving = isMoving(newEventsInProgress);
 
+        const startEvents = {};
+
+        for (const eventName in newEventsInProgress) {
+            const {originalEvent} = newEventsInProgress[eventName];
+            if (!this._eventsInProgress[eventName]) {
+                startEvents[`${eventName}start`] = originalEvent;
+            }
+            this._eventsInProgress[eventName] = newEventsInProgress[eventName];
+        }
+
+        // fire start events only after this._eventsInProgress has been updated
         if (!wasMoving && nowMoving) {
             this._fireEvent('movestart', nowMoving.originalEvent);
         }
 
-        for (const eventName in newEventsInProgress) {
-            const {originalEvent} = newEventsInProgress[eventName];
-            const isStart = !this._eventsInProgress[eventName];
-            this._eventsInProgress[eventName] = newEventsInProgress[eventName];
-            if (isStart) {
-                this._fireEvent(`${eventName}start`, originalEvent);
-            }
+        for (const name in startEvents) {
+            this._fireEvent(name, startEvents[name]);
         }
-
-        if (newEventsInProgress.rotate) this._bearingChanged = true;
 
         if (nowMoving) {
             this._fireEvent('move', nowMoving.originalEvent);
@@ -454,18 +473,24 @@ class HandlerManager {
             this._fireEvent(eventName, originalEvent);
         }
 
+        const endEvents = {};
+
         let originalEndEvent;
         for (const eventName in this._eventsInProgress) {
             const {handlerName, originalEvent} = this._eventsInProgress[eventName];
             if (!this._handlersById[handlerName].isActive()) {
                 delete this._eventsInProgress[eventName];
                 originalEndEvent = deactivatedHandlers[handlerName] || originalEvent;
-                this._fireEvent(`${eventName}end`, originalEndEvent);
+                endEvents[`${eventName}end`] = originalEndEvent;
             }
         }
 
+        for (const name in endEvents) {
+            this._fireEvent(name, endEvents[name]);
+        }
+
         const stillMoving = isMoving(this._eventsInProgress);
-        if ((wasMoving || nowMoving) && !stillMoving) {
+        if (allowEndAnimation && (wasMoving || nowMoving) && !stillMoving) {
             this._updatingCamera = true;
             const inertialEase = this._inertia._onMoveEnd(this._map.dragPan._inertiaOptions);
 
@@ -482,7 +507,6 @@ class HandlerManager {
                     this._map.resetNorth();
                 }
             }
-            this._bearingChanged = false;
             this._updatingCamera = false;
         }
 
@@ -492,13 +516,18 @@ class HandlerManager {
         this._map.fire(new Event(type, e ? {originalEvent: e} : {}));
     }
 
+    _requestFrame() {
+        this._map.triggerRepaint();
+        return this._map._renderTaskQueue.add(timeStamp => {
+            delete this._frameId;
+            this.handleEvent(new RenderFrameEvent('renderFrame', {timeStamp}));
+            this._applyChanges();
+        });
+    }
+
     _triggerRenderFrame() {
         if (this._frameId === undefined) {
-            this._frameId = this._map._requestRenderFrame(timeStamp => {
-                delete this._frameId;
-                this.handleEvent(new RenderFrameEvent('renderFrame', {timeStamp}));
-                this._applyChanges();
-            });
+            this._frameId = this._requestFrame();
         }
     }
 
