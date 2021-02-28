@@ -15,21 +15,12 @@ use Symfony\Component\HttpFoundation\Request;
 class IndexController extends AbstractController
 {
     /**
-     * @Route("/{reactRouting}", name="home",defaults={"home": null})
+     * @Route("/{reactRouting}", name="index", priority="-1", defaults={"reactRouting": null}, requirements={"reactRouting"=".+"})
      */
     public function index()
     {
         return $this->render('index/index.html.twig', ['controller_name' => 'IndexController']);
     }
-
-    /**
-     * @Route("", name="default",defaults={"home": null})
-     */
-    public function defaultRoute()
-    {
-        return $this->render('index/index.html.twig', ['controller_name' => 'IndexController']);
-    }
-
 
     /**
      * @Route("/api/tweets", name="tweets")
@@ -66,7 +57,6 @@ class IndexController extends AbstractController
 
         return new Response($data);
     }
-
 
     /**
      * @Route("/api/update", name="update")
