@@ -24,8 +24,9 @@ final class Version20200817201004 extends AbstractMigration
 
         //$this->addSql('CREATE SCHEMA public');
         //  $this->addSql('DROP SEQUENCE hashtag_id_seq CASCADE');
-        $this->addSql('CREATE SEQUENCE hashtags_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE TABLE hashtags (id INT NOT NULL, name VARCHAR(20),  cantidad INT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE SEQUENCE hashtag_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
+        $this->addSql('CREATE TABLE hashtag (id INT NOT NULL, name VARCHAR(20),  cantidad INT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql("INSERT INTO hashtag (id, name, cantidad) VALUES (1, 'QuedateEnCasa', 0)");
     }
 
     public function down(Schema $schema): void

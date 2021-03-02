@@ -50,8 +50,6 @@ class IndexController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $productRepository = $entityManager->getRepository(Hashtag::class)->findBy(array(), array('cantidad' => 'desc'), 10, null);
 
-        // $hashtags = $productRepository->findAll();
-
         $serializer = $this->get('serializer');
         $data = $serializer->serialize($productRepository, 'json');
 
