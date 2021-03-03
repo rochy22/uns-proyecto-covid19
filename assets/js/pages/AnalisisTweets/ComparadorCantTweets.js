@@ -5,7 +5,7 @@ import igual from "../../../../src/Media/igual.png";
 
 const Comparador = ({ data: tweets }) => {
   function List() {
-    console.log(tweets[0].sad);
+    console.log(tweets[0]);
     var value = tweets[0].sad + tweets[0].neutral + tweets[0].good;
     const listItems = tweets
       .slice(tweets.length - 7, tweets.length)
