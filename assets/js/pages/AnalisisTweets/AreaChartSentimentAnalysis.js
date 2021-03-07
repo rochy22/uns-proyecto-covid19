@@ -75,7 +75,7 @@ const SentimentAnalysis = ({ data: tweets }) => {
           ? tweets.map((data) => [
               Date.UTC(
                 data.day.split("T")[0].split("-")[0],
-                data.day.split("T")[0].split("-")[1],
+                data.day.split("T")[0].split("-")[1] - 1,
                 data.day.split("T")[0].split("-")[2]
               ),
               data.neutral,
@@ -89,7 +89,7 @@ const SentimentAnalysis = ({ data: tweets }) => {
           ? tweets.map((data) => [
               Date.UTC(
                 data.day.split("T")[0].split("-")[0],
-                data.day.split("T")[0].split("-")[1],
+                data.day.split("T")[0].split("-")[1] - 1,
                 data.day.split("T")[0].split("-")[2]
               ),
               data.sad,
@@ -102,7 +102,7 @@ const SentimentAnalysis = ({ data: tweets }) => {
           ? tweets.map((data) => [
               Date.UTC(
                 data.day.split("T")[0].split("-")[0],
-                data.day.split("T")[0].split("-")[1],
+                data.day.split("T")[0].split("-")[1] - 1,
                 data.day.split("T")[0].split("-")[2]
               ),
               data.good,
